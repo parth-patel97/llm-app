@@ -1,6 +1,5 @@
 import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
+import openai
 
 # Add a title and intro text
 st.title('Medical Symptom Checker')
