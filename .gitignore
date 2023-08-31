@@ -1,2 +1,7 @@
 .env
 venv
+.vscode/
+# Streamlit cache and logs
+.streamlit/
+# Compiled Python files
+__pycache__/
