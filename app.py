@@ -1,12 +1,11 @@
 import streamlit as st
-import openai
+import google.generativeai as genai
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
+genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
 def main():
     st.title("Symptom Checker and Medical Advice")
@@ -20,17 +19,19 @@ def main():
             # Construct OpenAI prompt
             prompt = f"User is experiencing symptoms: {symptoms}. They are concerned and want to know possible medical conditions associated with these symptoms and any general advice."
 
-            # Get OpenAI response
-            response = openai.Completion.create(
-                engine="text-davinci-003",
-                prompt=prompt,
-                max_tokens=300,
-                temperature=0.1,
-            )
+            model = genai.GenerativeModel("gemini-1.5-flash")
+            response = model.generate_content(prompt)
+            # # Get OpenAI response
+            # response = openai.Completion.create(
+            #     engine="text-davinci-003",
+            #     prompt=prompt,
+            #     max_tokens=300,
+            #     temperature=0.1,
+            # )
 
             # Display OpenAI response
             st.write("Possible Conditions and General Advice:")
-            st.write(response.choices[0].text.strip())
+            st.write(response.text)
 
 
 if __name__ == "__main__":
